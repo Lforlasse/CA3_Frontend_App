@@ -5,9 +5,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useParams,
-  useRouteMatch
+  Link
 } from "react-router-dom";
 
 function LogIn({ login }) {
@@ -71,65 +69,66 @@ function App() {
       .then(res => setLoggedIn(true));
   }
 
-  /*
-  function FetchCustom() {
-    return fetch("https://mesterskab.dk/ca3backend/api/info/fetchcustom")
-      
-      .then(res => {
+  let fetchCustom;
 
-      }
-      )}*/
+  function FetchCustom() {
+    fetch("https://mesterskab.dk/ca3backend/api/info/fetchcustom")
+      .then(response => response.json())
+      .then(json => fetchCustom = json)
+    return (<p>{fetchCustom}</p>)
+  }
 
   return (
-      <Router>
-        <div class="container">
-          <div class="row">
-            <div class="col">
+    <Router>
+      <div className="container">
+        <div className="row">
+          <div className="col">
 
-              <Switch>
-                <Route exact path="/">
-                  {!loggedIn ? (<LogIn login={login} />) :
-                    (<div className="row">
-                      <div class="col">
-                        {loggedIn ? (
-                          <div className="w-100">
-                            <Link to="/" className="btn btn-danger">Home</Link>
+            <Switch>
+              <Route exact path="/">
+                {!loggedIn ? (<LogIn login={login} />) :
+                  (<div className="row">
+                    <div className="col">
+                      {loggedIn ? (
+                        <div className="w-100">
+                          <Link to="/" className="btn btn-danger">Home</Link>
 
-                            <Link to="/user" className="btn btn-primary">User endpoint demo</Link>
+                          <Link to="/user" className="btn btn-primary">User endpoint demo</Link>
 
-                            <Link to="/external" className="btn btn-primary">external server fetch demo</Link>
-                          </div>) : ""}
-                        {loggedIn && facade.getRoles().includes("admin") ?
+                          <Link to="/external" className="btn btn-primary">external server fetch demo</Link>
+                        </div>) : ""}
+                      {loggedIn && facade.getRoles().includes("admin") ?
 
-                          <Link to="/admin" className="btn btn-primary">Admin endpoint demo</Link>
+                        <Link to="/admin" className="btn btn-primary">Admin endpoint demo</Link>
 
-                          : ""}
+                        : ""}
 
-                        <LoggedIn dataFromServer={dataFromServer} roles={facade.getRoles()} setDataFromServer={setDataFromServer} />
-                        <button onClick={logout}>Logout</button>
-                      </div>
+                      <LoggedIn dataFromServer={dataFromServer} roles={facade.getRoles()} setDataFromServer={setDataFromServer} />
+                      <button onClick={logout}>Logout</button>
                     </div>
-                    )}
+                  </div>
+                  )}
 
-                </Route>
-                <Route path="/user">
-                  <p>User stuff: {dataFromServer.msg}</p>
-                </Route>
-                <Route path="/admin">
-                  <p>test</p>
-                  <p>Admin stuff: {dataFromServer.msg}</p>
-                </Route>
-                <Route path="/external">
-
-                  <p>External stuff</p>
-                </Route>
-              </Switch>
-            </div>
+              </Route>
+              <Route path="/user">
+                <p>User stuff: {dataFromServer.msg}</p>
+              </Route>
+              <Route path="/admin">
+                <p>test</p>
+                <p>Admin stuff: {dataFromServer.msg}</p>
+              </Route>
+              <Route path="/external">
+                <div>
+                  <FetchCustom></FetchCustom>
+                </div>
+              </Route>
+            </Switch>
           </div>
         </div>
-      </Router >
-    )
+      </div>
+    </Router >
+  )
 
-  }
-  export default App;
+}
+export default App;
 
