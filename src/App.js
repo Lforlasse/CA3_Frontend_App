@@ -71,21 +71,20 @@ function App() {
       .then(res => setLoggedIn(true));
   }
 
+  /*
   function FetchCustom() {
     return fetch("https://mesterskab.dk/ca3backend/api/info/fetchcustom")
-      .then(handleHttpErrors)
+      
       .then(res => {
-      }
-      )}
 
+      }
+      )}*/
 
   return (
       <Router>
         <div class="container">
           <div class="row">
             <div class="col">
-
-
 
               <Switch>
                 <Route exact path="/">
