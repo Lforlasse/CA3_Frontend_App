@@ -71,60 +71,66 @@ function App() {
       .then(res => setLoggedIn(true));
   }
 
+  function FetchCustom() {
+    return fetch("https://mesterskab.dk/ca3backend/api/info/fetchcustom")
+      .then(handleHttpErrors)
+      .then(res => {
+      }
+      )}
+
+
   return (
-    <Router>
-      <div class="container">
-        <div class="row">
-          <div class="col">
+      <Router>
+        <div class="container">
+          <div class="row">
+            <div class="col">
 
 
 
-            <Switch>
-              <Route exact path="/">
-                {!loggedIn ? (<LogIn login={login} />) :
-                  (<div className="row">
-                    <div class="col">
-                      {loggedIn ? (
-                        <div className="w-100">
-                          <Link to="/" className="btn btn-danger">Home</Link>
+              <Switch>
+                <Route exact path="/">
+                  {!loggedIn ? (<LogIn login={login} />) :
+                    (<div className="row">
+                      <div class="col">
+                        {loggedIn ? (
+                          <div className="w-100">
+                            <Link to="/" className="btn btn-danger">Home</Link>
 
-                          <Link to="/user" className="btn btn-primary">User endpoint demo</Link>
+                            <Link to="/user" className="btn btn-primary">User endpoint demo</Link>
 
-                          <Link to="/external" className="btn btn-primary">external server fetch demo</Link>
-                        </div>) : ""}
-                      {loggedIn && facade.getRoles().includes("admin") ?
+                            <Link to="/external" className="btn btn-primary">external server fetch demo</Link>
+                          </div>) : ""}
+                        {loggedIn && facade.getRoles().includes("admin") ?
 
-                        <Link to="/admin" className="btn btn-primary">Admin endpoint demo</Link>
+                          <Link to="/admin" className="btn btn-primary">Admin endpoint demo</Link>
 
-                        : ""}
+                          : ""}
 
-
-
-
-                      <LoggedIn dataFromServer={dataFromServer} roles={facade.getRoles()} setDataFromServer={setDataFromServer} />
-                      <button onClick={logout}>Logout</button>
+                        <LoggedIn dataFromServer={dataFromServer} roles={facade.getRoles()} setDataFromServer={setDataFromServer} />
+                        <button onClick={logout}>Logout</button>
+                      </div>
                     </div>
-                  </div>
-                  )}
+                    )}
 
-              </Route>
-              <Route path="/user">
-                <p>User stuff: {dataFromServer.msg}</p>
-              </Route>
-              <Route path="/admin">
-                <p>test</p>
-                <p>Admin stuff: {dataFromServer.msg}</p>
-              </Route>
-              <Route path="/external">
-                <p>External stuff</p>
-              </Route>
-            </Switch>
+                </Route>
+                <Route path="/user">
+                  <p>User stuff: {dataFromServer.msg}</p>
+                </Route>
+                <Route path="/admin">
+                  <p>test</p>
+                  <p>Admin stuff: {dataFromServer.msg}</p>
+                </Route>
+                <Route path="/external">
+
+                  <p>External stuff</p>
+                </Route>
+              </Switch>
+            </div>
           </div>
         </div>
-      </div>
-    </Router >
-  )
+      </Router >
+    )
 
-}
-export default App;
+  }
+  export default App;
 
